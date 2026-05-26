@@ -12,6 +12,7 @@ package com.example.sistemaboletos.config;
 // import com.example.sistemaboletos.model.Rol;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -34,7 +35,9 @@ public class SecurityConfig {
         http
             .userDetailsService(userDetailsService)
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/eventos/**", "/login", "/registro", "/css/**", "/js/**", "/images/**").permitAll()
+                .requestMatchers("/", "/login", "/registro", "/css/**", "/js/**", "/images/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/eventos", "/eventos/*").permitAll()
+                .requestMatchers(HttpMethod.POST, "/eventos/comprar/**").authenticated()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )

@@ -16,4 +16,7 @@ import java.util.List;
 
 public interface CompraRepository extends JpaRepository<Compra, Integer> {
     List<Compra> findByUsuarioId(Integer usuarioId);
+    List<Compra> findByUsuarioEmailOrderByFechaCompraDesc(String email);
+    List<Compra> findByUsuarioEmailIgnoreCaseOrderByFechaCompraDesc(String email);
+    List<Compra> findAllByOrderByFechaCompraDesc();
 }
